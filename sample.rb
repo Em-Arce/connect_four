@@ -51,7 +51,11 @@ puts "  #{@board[28]}  #{@board[29]}  #{@board[30]}  #{@board[31]}  #{@board[32]
 puts "  #{@board[35]}  #{@board[36]}  #{@board[37]}  #{@board[38]}  #{@board[39]}  #{@board[40]}  #{@board[41]}  "
 
 @player1 = Player.new("Ayaka", "\u{1f534}")
+@player1.display()
 @player2 = Player.new("Paimon", "\u{1f535}")
+@player2.display()
+puts "#{@player1.name} will be playing against #{@player2.name}"
 game = Game.new(@player1, @player2)
+puts "Initializing board..."
 game.display_board()
 game.turn()
