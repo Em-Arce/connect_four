@@ -1,4 +1,5 @@
 require_relative 'player.rb'
+require_relative "game.rb"
 require "pry-byebug"
 
 def valid_input?(input)
@@ -45,5 +46,8 @@ end
 player2 = Player.new(@name2, @color2)
 player2.display()
 puts "#{@name1} will be playing against #{@name2}"
+
+game = Game.new(player1, player2)
+game.display_board()
 
 
