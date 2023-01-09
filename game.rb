@@ -32,7 +32,7 @@ class Game
     @board[position] != "\u26aa"
   end
 
-  def valid_move(position)
+  def valid_move?(position)
     position.between?(0,41) && !position_occupied?(position)
   end
 
@@ -63,9 +63,9 @@ class Game
     array
   end
 
-  def turn(turn_count)
+  def turn
     #  uncomment when isolated debug
-    # @turn_count = 1
+    @turn_count = 1
     @current_player = @turn_count.odd? ? @player1 : @player2
     # @allowed_positions = if turn_count == 1
     #                       allowed_positions()
@@ -78,8 +78,9 @@ class Game
     if valid_move?(position)
       @board[position] = @current_player.color
     else
-      puts "invalid input between #{updated_allowable_positions}"
+      puts "invalid input between #{allowable_positions}"
       turn
     end
+    display_board()
   end
 end
