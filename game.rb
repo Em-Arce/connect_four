@@ -49,59 +49,38 @@ class GAME
     # binding.pry
     if column == 0
       arr = [35, 28, 21, 14, 7, 0]
-      arr.each do |el|
-        if position_occupied?(el) == false
-          position = el.to_i
-          break
-        end
-      end  
+      position = arr.find do |value|
+        position_occupied?(value) == false
+      end
     elsif column == 1
       arr = [36, 29, 22, 15, 8, 1]
-      arr.each do |el|
-        if position_occupied?(el) == false
-          position = el.to_i
-          break
-        end
+      position = arr.find do |value|
+        position_occupied?(value) == false
       end
     elsif column == 2
       arr = [37, 30, 23, 16, 9, 2]
-      arr.each do |el|
-        if position_occupied?(el) == false
-          position = el.to_i
-          break
-        end
-      end  
+      position = arr.find do |value|
+        position_occupied?(value) == false
+      end
     elsif column == 3
       arr = [38, 31, 24, 17, 10, 3]
-      arr.each do |el|
-        if position_occupied?(el) == false
-          position = el.to_i
-          break
-        end
+      position = arr.find do |value|
+        position_occupied?(value) == false
       end
     elsif column == 4
       arr = [39, 32, 25, 18, 11, 4]
-      arr.each do |el|
-        if position_occupied?(el) == false
-          position = el.to_i
-          break
-        end
+      position = arr.find do |value|
+        position_occupied?(value) == false
       end
     elsif column == 5
       arr = [40, 33, 26, 19, 12, 5]
-      arr.each do |el|
-        if position_occupied?(el) == false
-          position = el.to_i
-          break
-        end
+      position = arr.find do |value|
+        position_occupied?(value) == false
       end
     elsif column == 6
       arr = [41, 34, 27, 20, 13, 6]
-      arr.each do |el|
-        if position_occupied?(el) == false
-          position = el.to_i
-          break
-        end
+      position = arr.find do |value|
+        position_occupied?(value) == false
       end
     else
       # return 
@@ -129,9 +108,10 @@ class GAME
     end
     puts "#{@current_player.name} chose #{column}"
     column -= 1
-    position = get_position(column)
+    position = get_position(column).to_i
     if valid_move?(position)
       @board[position] = @current_player.color
+      puts "#{@current_player.name} occupied cell #{position}"
     else
       puts "Invalid Input: Choose another column 1 to 7"
       turn
