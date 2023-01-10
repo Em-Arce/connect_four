@@ -45,9 +45,11 @@ end
 @color2 = computer_color(@input1)
 player2 = Player.new(@name2, @color2)
 player2.display()
-puts "#{@name1} will be playing against #{@name2}"
+puts "It's #{@name1} vs #{@name2}"
 
-game = Game.new(player1, player2)
+game = CONNECT_FOUR.new(player1, player2)
+puts "Initialize board..."
 game.display_board()
+game.play()
 
 
