@@ -6,26 +6,10 @@ def valid_input?(input)
   input == "b" || input == "r"
 end
 
-def assign_players()
-  puts "Annyeong"
-end
-
-print "MODES"
-puts "1  2 computers"
-puts "2  player1 is human, player 2 is computer"
-puts "3  2 human players"
-puts "Enter mode: "
-@mode = gets.chomp.to_i
-
-print "Enter player1 Name : "
-@name1 = gets.chomp
-print "Enter Color  "
-puts "Enter b for blue or r for red: "
-@input1 = gets.chomp
-
-until valid_input?(@input1)
-  print "Invalid color, Enter b for blue or r for red: " 
-  @input1 = gets.chomp
+def get_name()
+  print "Enter player name : "
+  @name = gets.chomp.to_s
+  @name
 end
 
 def convert_input_to_ascii(input)
@@ -37,12 +21,20 @@ def convert_input_to_ascii(input)
   color
 end
 
-@color1 = convert_input_to_ascii(@input1)
+def get_color()
+  print "Enter Color  "
+  puts "Enter b for blue or r for red: "
+  @input = gets.chomp.to_s
 
-player1 = Player.new(@name1, @color1)
-player1.display()
+  until valid_input?(@input)
+    print "Invalid color, Enter b for blue or r for red: " 
+    @input = gets.chompto_s
+  end
+  @input
+end
 
-def computer_color(color1)
+def get_computer_color(color1)
+  binding.pry
   color2 = if color1 == "b"
     "\u{1f534}"
   elsif color1 == "r"
@@ -51,14 +43,48 @@ def computer_color(color1)
   color2
 end
 
-# for player2 which is computer
-@name2 = "Paimon"
-@color2 = computer_color(@input1)
-player2 = Player.new(@name2, @color2)
-player2.display()
+# can add mode 1: 2 computer players and mode 3: 2 human players
+def get_player_info(mode)
+  player1, player2 = nil
+  if mode == 2 
+    @name1 = get_name()
+    @input1 = get_color().to_s
+    @color1 = convert_input_to_ascii(@input1)
+    player1 = Player.new(@name1, @color1)
+    player1.display()
+
+    # for player2 which is computer
+    @name2 = "Paimon"
+    @color2 = get_computer_color(@input1)
+    binding.pry
+    player2 = Player.new(@name2, @color2)
+    player2.display()
+  else
+    nil
+  end
+  return player1, player2  
+end
+
+def valid_mode?(mode)
+  until mode.between?(1,3)
+    print "Invalid mode, enter any number from 1 to 3 " 
+    mode = gets.chomp.to_i
+  end
+  mode
+end
+
+puts "MODES"
+puts "1  2 computers"
+puts "2  player1 is human, player 2 is computer"
+puts "3  2 human players"
+puts "Enter mode: "
+mode = gets.chomp.to_i
+mode = valid_mode?(mode)
+
+player1, player2 = get_player_info(mode)
 puts "It's #{@name1} vs #{@name2} match!"
 
-# game = CONNECT_FOUR.new(player1, player2)
-# game.play()
+game = CONNECT_FOUR.new(player1, player2)
+game.play()
 
 
