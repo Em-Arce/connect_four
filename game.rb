@@ -29,11 +29,9 @@ class GAME
     @board[position] != "\u26aa"
   end
 
-  def valid_move?(position)
-    position.between?(0,41) && !position_occupied?(position)
+  def all_positions_occupied?
+    @board.all? { |value| value != "\u26aa" }
   end
-
-  
 
   def get_pc_moves()
     input = rand(1..7) 
@@ -41,51 +39,64 @@ class GAME
   end
 
   def valid_column?(column)
-    column.between?(1,7)
+    unless column.between?(1,7)
+      print "Invalid column, enter any number from 1 to 7" 
+      column = gets.chomp.to_i
+    end
+    column
   end
 
   def get_position(column)
     position = ""
     # binding.pry
     if column == 0
-      arr = [35, 28, 21, 14, 7, 0]
-      position = arr.find do |value|
-        position_occupied?(value) == false
-      end
+      position = find_available_position([35, 28, 21, 14, 7, 0])
     elsif column == 1
-      arr = [36, 29, 22, 15, 8, 1]
-      position = arr.find do |value|
-        position_occupied?(value) == false
-      end
+      position = find_available_position([36, 29, 22, 15, 8, 1])
     elsif column == 2
-      arr = [37, 30, 23, 16, 9, 2]
-      position = arr.find do |value|
-        position_occupied?(value) == false
-      end
+      position = find_available_position([37, 30, 23, 16, 9, 2])
     elsif column == 3
-      arr = [38, 31, 24, 17, 10, 3]
-      position = arr.find do |value|
-        position_occupied?(value) == false
-      end
+      position = find_available_position([38, 31, 24, 17, 10, 3])
     elsif column == 4
-      arr = [39, 32, 25, 18, 11, 4]
-      position = arr.find do |value|
-        position_occupied?(value) == false
-      end
+      position = find_available_position([39, 32, 25, 18, 11, 4])
     elsif column == 5
-      arr = [40, 33, 26, 19, 12, 5]
-      position = arr.find do |value|
-        position_occupied?(value) == false
-      end
+      position = find_available_position([40, 33, 26, 19, 12, 5])
     elsif column == 6
-      arr = [41, 34, 27, 20, 13, 6]
-      position = arr.find do |value|
-        position_occupied?(value) == false
-      end
+      position = find_available_position([41, 34, 27, 20, 13, 6])
     else
       # return 
     end
     position
+  end
+  
+  def find_available_position(array)
+    position = nil
+    position = if column_fully_occupied?(array)
+      nil
+    else
+      array.find do |value|
+        !position_occupied?(value)
+      end
+    end
+    position
+  end
+
+  def column_fully_occupied?(array)
+    arr = []
+    array.each do |position|
+      arr << position_occupied?(position)      
+    end
+
+    result = if arr.all? {|e| e == true }
+      true
+    else
+      false
+    end
+    result
+  end
+
+  def valid_move?(position)
+    position.between?(0,41) && !position_occupied?(position)
   end
 
   def turn()
@@ -95,23 +106,17 @@ class GAME
     puts "#{@current_player.name} choose a column from 1 to 7"
     if @current_player.name === "Paimon"
       column = get_pc_moves()
-      until valid_column?(column)
-        print "Invalid column, enter any number from 1 to 7" 
-        column = gets.chomp.to_i
-      end
+      column = valid_column?(column)
     else
       column = gets.chomp.to_i
-      until valid_column?(column)
-        print "Invalid column, enter any number from 1 to 7" 
-        column = gets.chomp.to_i
-      end
+      column = valid_column?(column)
     end
     puts "#{@current_player.name} chose #{column}"
     column -= 1
     position = get_position(column).to_i
     if valid_move?(position)
       @board[position] = @current_player.color
-      puts "#{@current_player.name} occupied cell #{position}"
+      puts "#{@current_player.name} occupied square #{position}"
     else
       puts "Invalid Input: Choose another column 1 to 7"
       turn
@@ -120,15 +125,16 @@ class GAME
 
   def play
     puts "Initialize Board"
-    display_board
+    display_board()
     @turn_count = 0
     until game_over?
+      # Turn increase by once 2 players made moves
       @turn_count += 1
       turn()
       puts "----------CURRENT BOARD STATUS----------"
       puts "Turn Number: #{@turn_count}"
       puts "Valid moves are white cells occupied from bottom up"
-      display_board
+      display_board()
     end
 
     if win? 
@@ -139,8 +145,8 @@ class GAME
     puts "Do you want a rematch? Y/N"
     answer = gets.chomp.to_s.downcase
     if answer == "y"
-      reset
-      play
+      reset()
+      play()
     else
       puts "Until the next match!"
     end
@@ -208,10 +214,6 @@ class CONNECT_FOUR < GAME
     [24, 18 , 12, 6],
    
   ].freeze
-
-  def all_positions_occupied?
-    @board.all? { |value| value != "\u26aa" }
-  end
 
   def tie?
     !win? && all_positions_occupied?
