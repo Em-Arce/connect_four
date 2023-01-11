@@ -39,7 +39,7 @@ class GAME
   end
 
   def valid_column?(column)
-    unless column.between?(1,7)
+    until column.between?(1,7)
       print "Invalid column, enter any number from 1 to 7" 
       column = gets.chomp.to_i
     end
@@ -71,7 +71,7 @@ class GAME
   
   def find_available_position(array)
     position = nil
-    position = if column_fully_occupied?(array)
+    position = if column_full?(array)
       nil
     else
       array.find do |value|
@@ -81,7 +81,7 @@ class GAME
     position
   end
 
-  def column_fully_occupied?(array)
+  def column_full?(array)
     arr = []
     array.each do |position|
       arr << position_occupied?(position)      
@@ -111,15 +111,17 @@ class GAME
       column = gets.chomp.to_i
       column = valid_column?(column)
     end
+
     puts "#{@current_player.name} chose #{column}"
     column -= 1
     position = get_position(column).to_i
+    
     if valid_move?(position)
       @board[position] = @current_player.color
       puts "#{@current_player.name} occupied square #{position}"
     else
       puts "Invalid Input: Choose another column 1 to 7"
-      turn
+      turn()
     end
   end
 
