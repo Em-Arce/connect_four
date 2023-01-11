@@ -119,6 +119,7 @@ class GAME
     if valid_move?(position)
       @board[position] = @current_player.color
       puts "#{@current_player.name} occupied square #{position}"
+      puts "----------END OF #{@current_player.name.upcase}'S TURN----------"
     else
       puts "Invalid Input: Choose another column 1 to 7"
       turn()
@@ -130,7 +131,6 @@ class GAME
     display_board()
     @turn_count = 0
     until game_over?
-      # Turn increase by once 2 players made moves
       @turn_count += 1
       turn()
       puts "----------CURRENT BOARD STATUS----------"
@@ -214,7 +214,26 @@ class CONNECT_FOUR < GAME
     [31, 25 , 19, 13],
     [24, 16 , 8, 0],
     [24, 18 , 12, 6],
-   
+    [4, 10, 16, 22],
+    [4, 12, 20, 28],
+    [11, 17, 23, 29],
+    [11, 19, 27, 35],
+    [18, 24, 30, 36],
+    [18, 26, 34, 42],
+    [37, 31, 25, 19],
+    [38, 32, 26, 20],
+    [30, 33, 27, 21],
+    [42, 34, 26, 18],
+    [41, 33, 25, 17],
+    [40, 32, 24, 16],
+    [30, 24, 18, 12],
+    [31, 25, 19, 13],
+    [34, 26, 18, 10],
+    [33, 25, 17, 9],
+    [23, 17, 11, 5],
+    [24, 18, 12, 6],
+    [27, 19, 11, 3],
+    [26, 18, 10, 2]
   ].freeze
 
   def tie?
