@@ -34,7 +34,7 @@ def get_color()
 end
 
 def get_computer_color(color1)
-  binding.pry
+  # binding.pry
   color2 = if color1 == "b"
     "\u{1f534}"
   elsif color1 == "r"
@@ -56,7 +56,7 @@ def get_player_info(mode)
     # for player2 which is computer
     @name2 = "Paimon"
     @color2 = get_computer_color(@input1)
-    binding.pry
+    # binding.pry
     player2 = Player.new(@name2, @color2)
     player2.display()
   else
@@ -73,16 +73,17 @@ def valid_mode?(mode)
   mode
 end
 
-puts "MODES"
-puts "1  2 computers"
-puts "2  player1 is human, player 2 is computer"
-puts "3  2 human players"
+puts "CONNECT FOUR MODES"
+puts "1: 2 computers"
+puts "2: player1 is human, player 2 is computer"
+puts "3: 2 human players"
 puts "Enter mode: "
 mode = gets.chomp.to_i
 mode = valid_mode?(mode)
 
+puts "----------PLAYERS----------"
 player1, player2 = get_player_info(mode)
-puts "It's #{@name1} vs #{@name2} match!"
+puts "#{player1.name} vs #{player2.name} match begins!"
 
 game = CONNECT_FOUR.new(player1, player2)
 game.play()
