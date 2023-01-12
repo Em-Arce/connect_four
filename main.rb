@@ -66,8 +66,12 @@ def get_player_info(mode)
 end
 
 def valid_mode?(mode)
-  until mode.between?(1,3)
-    print "Invalid mode, enter any number from 1 to 3 " 
+  # until mode.between?(1,3)
+  #   print "Invalid mode, enter any number from 1 to 3 " 
+  #   mode = gets.chomp.to_i
+  # end
+  until mode == 2
+    print "Invalid mode, enter mode 2" 
     mode = gets.chomp.to_i
   end
   mode
@@ -77,9 +81,9 @@ puts "CONNECT FOUR MODES"
 puts "1: 2 computers"
 puts "2: player1 is human, player 2 is computer"
 puts "3: 2 human players"
-puts "Enter mode: "
+puts "Enter mode 2 for now"
 mode = gets.chomp.to_i
-mode = valid_mode?(mode)
+mode = valid_mode?(mode=2)
 
 puts "----------PLAYERS----------"
 player1, player2 = get_player_info(mode)
