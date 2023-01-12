@@ -1,7 +1,7 @@
 require_relative "player.rb"
 require "pry-byebug"
 
-class GAME
+class Game
   def initialize(player1, player2)
     @board = Array.new(42, "\u26aa")
     @player1 = player1
@@ -46,6 +46,7 @@ class GAME
     column
   end
 
+  # checks given column if it is full: if full position is nil, else returns position is index of first available array element
   def get_position(column)
     position = ""
     # binding.pry
@@ -69,6 +70,7 @@ class GAME
     position
   end
   
+  # given array of indices sorted in descending order, it will get the first available position it finds
   def find_available_position(array)
     position = nil
     position = if column_full?(array)
@@ -81,6 +83,7 @@ class GAME
     position
   end
 
+  # given an array of indices for a column, it will check if all positions are occupied
   def column_full?(array)
     arr = []
     array.each do |position|
@@ -95,6 +98,7 @@ class GAME
     result
   end
 
+  # checks if position is within allowable range and if occupied
   def valid_move?(position)
     position.between?(0,41) && !position_occupied?(position)
   end
@@ -121,12 +125,12 @@ class GAME
       puts "#{@current_player.name} occupied square #{position}"
       puts "----------END OF #{@current_player.name.upcase}'S TURN----------"
     else
-      puts "Invalid Input: Choose another column 1 to 7"
+      puts "Invalid Input: Column is not between 1 to 7 or position is already occupied."
       turn()
     end
   end
 
-  def play
+  def play()
     puts "Initialize Board"
     display_board()
     @turn_count = 0
@@ -140,7 +144,7 @@ class GAME
     end
 
     if win? 
-      puts "GAME OVER. #{@current_player.name} wins this match!"
+      puts "GAME OVER. #{@current_player.name} wins!"
     else
       puts "Its a tie!"
     end
@@ -155,7 +159,7 @@ class GAME
   end
 end
 
-class CONNECT_FOUR < GAME
+class CONNECT_FOUR < Game
   HORIZONTALS = [
     [35, 36, 37, 38],
     [36, 37, 38, 39],
