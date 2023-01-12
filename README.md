@@ -1,24 +1,35 @@
-# README
+#### Prerequisites and Version
+Ruby and Rails must be installed in computer.
+```
+  Ruby 2.7.6
+  Rails 6.1.7
+```
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#### Installation
+1. Open terminal
+2. Go to desired folder to download the contents of this repository.
+3. Copy and paste this code into the terminal: 
+```
+  git clone git@github.com:Em-Arce/connect_four.git
+ ```
+4. Click Enter
+5. Go inside the folder in your computer and type: 
+```
+  ruby main.rb
+```
+6. Enjoy!
 
-Things you may want to cover:
+#### Setup project (Optional if want to run test)
+```
+  $ bundle install
+  $ rails db:setup
+```
 
-* Ruby version
+#### Run the test (Optional)
+1. Make sure the setup steps are completed before running the test
+2. Go to the folder of the project in your computer then type:
+```
+  rspec
+```
 
-* System dependencies
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
